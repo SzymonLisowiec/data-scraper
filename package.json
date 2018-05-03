@@ -1,6 +1,6 @@
 {
-	"name": "data-scraper",
-	"version": "1.0.0",
+	"name": "scrapie",
+	"version": "1.0.1",
 	"description": "Simple and light framework to scraping data.",
 	"main": "./index.js",
 	"directories": {
@@ -14,7 +14,7 @@
 	"author": "Szymon 'Kysune' Lisowiec",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/SzymonLisowiec/data-scraper"
+		"url": "https://github.com/SzymonLisowiec/scrapie"
 	},
 	"license": "MIT",
 	"dependencies": {

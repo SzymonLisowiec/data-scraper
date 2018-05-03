@@ -1,12 +1,12 @@
-# data-scraper
+# scrapie
 Simple and light framework to scraping data.
 
 ## Examples
-[Look here](https://github.com/SzymonLisowiec/data-scraper/tree/master/examples)
+[Look here](https://github.com/SzymonLisowiec/scrapie/tree/master/examples)
 
 ## List
 ```javascript
-const ListScrapper = require('data-scraper').List;
+const ListScrapper = require('scrapie').List;
 
 let scrapper = new ListScrapper(options);
 ```
@@ -19,10 +19,10 @@ let scrapper = new ListScrapper(options);
 ### Methods
 
 #### Basic methods
-- setProgress(fn) - set function to show progress ([look example](https://github.com/SzymonLisowiec/data-scraper/blob/master/examples/humblebundle.js#L15))
-- setNextPage(fn) - set function to specify a next page url, returns `false` if end of scraping. ([look example](https://github.com/SzymonLisowiec/data-scraper/blob/master/examples/humblebundle.js#L27))
-- setParaser(fn) - set function to parse received body. ([look example](https://github.com/SzymonLisowiec/data-scraper/blob/master/examples/mediaexpert.js#L45))
-- addModifier(fn) - add function to modify scraped data. ([look example](https://github.com/SzymonLisowiec/data-scraper/blob/master/examples/humblebundle.js#L49))
+- setProgress(fn) - set function to show progress ([look example](https://github.com/SzymonLisowiec/scrapie/blob/master/examples/humblebundle.js#L15))
+- setNextPage(fn) - set function to specify a next page url, returns `false` if end of scraping. ([look example](https://github.com/SzymonLisowiec/scrapie/blob/master/examples/humblebundle.js#L27))
+- setParaser(fn) - set function to parse received body. ([look example](https://github.com/SzymonLisowiec/scrapie/blob/master/examples/mediaexpert.js#L45))
+- addModifier(fn) - add function to modify scraped data. ([look example](https://github.com/SzymonLisowiec/scrapie/blob/master/examples/humblebundle.js#L49))
 
 In each above methods `fn` is function with one attribute:
 - *data* - if server's response is `json`.

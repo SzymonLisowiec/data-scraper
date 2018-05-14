@@ -30,7 +30,7 @@ In each above methods `fn` is function with one attribute:
 - *body* - if server's response is none of the above. 
 
 #### Others methods
-- run() - run scraper
+- run() - run scraper (can be used synchronically)
 
 ### Events
 #### data

@@ -91,14 +91,14 @@ class List extends EventEmitter {
 					}
 					
 					data = source;
-
+					
 					if(this.progress)
 						this.progress(data);
 
 					data = this.parser(data);
 					
 					for(let i in this.modifiers)
-						data = data.map(this.modifiers[i]);
+						data = data.map(this.modifiers[i].bind(this));
 					
 					this.data = this.data.concat(data);
 
@@ -140,9 +140,15 @@ class List extends EventEmitter {
 	}
 
 	run () {
-		
-		this.do();
+		return new Promise(resolve => {
 
+			this.do();
+
+			this.once('end', data => {
+				resolve(data);
+			});
+
+		});
 	}
 
 	end () {

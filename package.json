@@ -1,6 +1,6 @@
 {
 	"name": "scrapie",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"description": "Simple and light framework to scraping data.",
 	"main": "./index.js",
 	"directories": {

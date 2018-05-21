@@ -12,7 +12,6 @@ let scrapper = new ListScrapper(options);
 ```
 ### Options
 - *url* - url to scraping data
-- *type* - type of response from above url. Possible types: `html`, `json`, `false`. Default is `html`.
 - *delay* - delay before next request (ms)
 - *request* - [request/request](https://github.com/request/request) if you need custom headers etc.
 
@@ -23,6 +22,7 @@ let scrapper = new ListScrapper(options);
 - setNextPage(fn) - set function to specify a next page url, returns `false` if end of scraping. ([look example](https://github.com/SzymonLisowiec/scrapie/blob/master/examples/humblebundle.js#L27))
 - setParaser(fn) - set function to parse received body. ([look example](https://github.com/SzymonLisowiec/scrapie/blob/master/examples/mediaexpert.js#L45))
 - addModifier(fn) - add function to modify scraped data. ([look example](https://github.com/SzymonLisowiec/scrapie/blob/master/examples/humblebundle.js#L49))
+- addFilter(fn) - add function to filtering items (return false to reject item).
 
 In each above methods `fn` is function with one attribute:
 - *data* - if server's response is `json`.
@@ -31,6 +31,7 @@ In each above methods `fn` is function with one attribute:
 
 #### Others methods
 - run() - run scraper (can be used synchronically)
+- setOption(option, value) - set option in config after creation instance
 
 ### Events
 #### data
@@ -39,7 +40,7 @@ In each above methods `fn` is function with one attribute:
 - *data* [array] - all scraped data
 
 ## TODO
-- [ ] Autodetect type of server's response, without require `type` from options
+- [x] Autodetect type of server's response, without require `type` from options
 
 ## License
 MIT License

@@ -11,14 +11,16 @@ class List extends EventEmitter {
 		this.config = Object.assign({
 			url: false,
 			delay: 1000,
-			request: Request.defaults({jar: true}),
-			type: 'html'
+			request: Request.defaults({jar: true})
 		}, config);
+		
+		this.validateConfig();
 		
 		this.request = this.config.request;
 		this.progress = null;
 		this.parser = null;
 		this.modifiers = [];
+		this.filters = [];
 		this.next_page = null;
 
 		this.data = [];
@@ -28,6 +30,26 @@ class List extends EventEmitter {
 			this.config.base_url = url.protocol + '//' + url.host;
 		}
 
+	}
+
+	validateConfig () {
+		
+		if(typeof this.config.url != 'string' || !Url.parse(this.config.url).hostname)
+			throw new Error('`url` must be valid url.');
+
+		if(this.config.base_url && (typeof this.config.base_url != 'string' || !Url.parse(this.config.url).base_url))
+			throw new Error('`base_url` must be valid url.');
+		
+		if(!Number.isInteger(this.config.delay))
+			throw new Error('`delay` must be integer.');
+
+		if(!this.config.request instanceof Request)
+			throw new Error('`request` must be instance of https://github.com/request/request');
+
+	}
+
+	setOption (option, value) {
+		this.config[option] = value;
 	}
 
 	setNextPage (fn) {
@@ -44,6 +66,10 @@ class List extends EventEmitter {
 
 	addModifier (fn) {
 		this.modifiers.push(fn);
+	}
+
+	addFilter (fn) {
+		this.filters.push(fn);
 	}
 
 	loadPage (next_url) {
@@ -74,21 +100,27 @@ class List extends EventEmitter {
 
 					let source, data;
 
-					switch (this.config.type.toLowerCase()) {
+					if(response.headers && response.headers['content-type']){
+						
+						let content_type = response.headers['content-type'].split(';')[0].trim().toLowerCase();
 
-						case 'html':
-							source = Cheerio.load(body);
-							break;
+						switch (content_type) {
 
-						case 'json':
-							source = JSON.parse(body);
-							break;
+							case 'text/html':
+								source = Cheerio.load(body);
+								break;
 
-						default:
-							source = body;
-							break;
+							case 'application/json':
+								source = JSON.parse(body);
+								break;
 
-					}
+							default:
+								source = body;
+								break;
+
+						}
+
+					}else source = body;
 					
 					data = source;
 					
@@ -99,14 +131,16 @@ class List extends EventEmitter {
 					
 					for(let i in this.modifiers)
 						data = data.map(this.modifiers[i].bind(this));
-					
+
+					for(let i in this.filters)
+						data = data.filter(this.filters[i].bind(this));
+
 					this.data = this.data.concat(data);
+					this.emit('data', data);
 
 					let next_page = this.next_page(source, this.end);
 
 					resolve(next_page);
-					
-					this.emit('data', data);
 
 				}else{
 

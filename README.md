@@ -1,6 +1,11 @@
 # scrapie
 Simple and light framework to scraping data.
 
+## Installation
+```
+npm i --save scrapie
+```
+
 ## Examples
 [Look here](https://github.com/SzymonLisowiec/scrapie/tree/master/examples)
 
